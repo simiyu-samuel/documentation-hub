@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
@@ -25,6 +25,13 @@ import { SettingsPage } from './pages/admin/SettingsPage';
 function App() {
   return (
     <HelmetProvider>
+      <Helmet>
+        <script
+          defer
+          src="https://vercel.com/analytics/script.js"
+          data-token="YOUR_VERCEL_ANALYTICS_TOKEN"
+        ></script>
+      </Helmet>
       <ThemeProvider>
         <AuthProvider>
           <Router>
