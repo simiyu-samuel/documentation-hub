@@ -33,24 +33,25 @@ export const TagsPage: React.FC = () => {
   };
 
   const handleSave = async () => {
-    if (!form.name || !form.slug) {
-      setError('Name and slug are required.');
+    if (!form.name || !form.slug || !form.color) {
+      setError('Name, slug, and color are required.');
       return;
     }
     setSaving(true);
     setError(null);
+    let color = form.color || '#38bdf8'; // Default to Tailwind sky-400
     let result;
     if (editingId) {
       result = await supabase
         .from('tags')
-        .update({ ...form })
+        .update({ ...form, color })
         .eq('id', editingId)
         .select()
         .single();
     } else {
       result = await supabase
         .from('tags')
-        .insert([{ ...form }])
+        .insert([{ ...form, color }])
         .select()
         .single();
     }
@@ -90,7 +91,7 @@ export const TagsPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <Input label="Name" name="name" value={form.name || ''} onChange={handleInputChange} required />
             <Input label="Slug" name="slug" value={form.slug || ''} onChange={handleInputChange} required />
-            <Input label="Color" name="color" value={form.color || ''} onChange={handleInputChange} placeholder="#color or tailwind class" />
+            <Input label="Color" name="color" value={form.color || ''} onChange={handleInputChange} placeholder="#color or tailwind class" required />
           </div>
           <div className="flex space-x-2">
             <Button onClick={handleSave} loading={saving}>{editingId ? 'Update' : 'Add'}</Button>
