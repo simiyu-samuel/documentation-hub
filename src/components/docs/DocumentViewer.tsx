@@ -12,6 +12,7 @@ import { Breadcrumb } from '../ui/Breadcrumb';
 import { Calendar, User, Eye, Tag as TagIcon, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import HtmlDocRenderer from './HtmlDocRenderer';
 
 interface DocumentViewerProps {
   document: DocumentWithRelations;
@@ -252,68 +253,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({ document }) => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.5 }}
               >
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw, rehypeSlug, rehypeAutolinkHeadings]}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || '');
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          style={tomorrow}
-                          language={match[1]}
-                          PreTag="div"
-                          customStyle={{
-                            background: '#1e293b',
-                            borderRadius: '0.75rem',
-                            padding: '1.5rem',
-                            fontSize: '0.875rem',
-                            lineHeight: '1.5',
-                          }}
-                          {...props}
-                        >
-                          {String(children).replace(/\n$/, '')}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                    h1: ({ children, ...props }) => (
-                      <h1 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children, ...props }) => (
-                      <h2 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children, ...props }) => (
-                      <h3 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h3>
-                    ),
-                    h4: ({ children, ...props }) => (
-                      <h4 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h4>
-                    ),
-                    h5: ({ children, ...props }) => (
-                      <h5 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h5>
-                    ),
-                    h6: ({ children, ...props }) => (
-                      <h6 id={`heading-${toc.findIndex(item => item.title === children)}`} {...props}>
-                        {children}
-                      </h6>
-                    ),
-                  }}
-                >
-                  {document.content}
-                </ReactMarkdown>
+                <HtmlDocRenderer html={document.content} title={document.title} />
               </motion.div>
             </div>
           </motion.article>
