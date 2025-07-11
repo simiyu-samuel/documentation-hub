@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { ToastProvider } from './components/ui/Toast';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -24,53 +25,56 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <Router>
-            <Routes>
-              {/* Public routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/docs" element={<DocsPage />} />
-              <Route path="/docs/:slug" element={<DocumentPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/unauthorized" element={<UnauthorizedPage />} />
-              
-              {/* Admin routes */}
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/documents"
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <DocumentsList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/documents/:id/edit"
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <DocumentEditor />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin/documents/new"
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <DocumentEditor />
-                  </ProtectedRoute>
-                }
-              />
-              
-              {/* 404 */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background">
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/docs" element={<DocsPage />} />
+                <Route path="/docs/:slug" element={<DocumentPage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                
+                {/* Admin routes */}
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/documents"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DocumentsList />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/documents/:id/edit"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DocumentEditor />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/documents/new"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DocumentEditor />
+                    </ProtectedRoute>
+                  }
+                />
+                
+                {/* 404 */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+              <ToastProvider />
+            </div>
           </Router>
         </AuthProvider>
       </ThemeProvider>
