@@ -18,6 +18,9 @@ import { UnauthorizedPage } from './pages/UnauthorizedPage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { DocumentsList } from './pages/admin/DocumentsList';
 import { DocumentEditor } from './pages/admin/DocumentEditor';
+import { CategoriesPage } from './pages/admin/CategoriesPage';
+import { TagsPage } from './pages/admin/TagsPage';
+import { SettingsPage } from './pages/admin/SettingsPage';
 
 function App() {
   return (
@@ -66,6 +69,30 @@ function App() {
                   element={
                     <ProtectedRoute requireAdmin>
                       <DocumentEditor />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/categories"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <CategoriesPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/tags"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <TagsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/settings"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <SettingsPage />
                     </ProtectedRoute>
                   }
                 />

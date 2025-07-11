@@ -120,7 +120,7 @@
   }
   
   .prose-modern blockquote {
-    @apply border-l-4 border-primary-500 bg-primary-50 dark:bg-primary-950/30 pl-6 py-4 rounded-r-lg shadow-soft;
+    @apply border-l-4 border-primary-500 bg-primary-50 dark:bg-primary-900 dark:bg-opacity-30 pl-6 py-4 rounded-r-lg shadow-soft;
   }
   
   .prose-modern table {
@@ -144,7 +144,7 @@
   }
   
   .nav-item.active {
-    @apply bg-primary-100 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 font-medium shadow-soft;
+    @apply bg-primary-100 dark:bg-primary-900 dark:bg-opacity-50 text-primary-600 dark:text-primary-400 font-medium shadow-soft;
   }
   
   .loading-skeleton {
@@ -168,7 +168,7 @@
   }
   
   .hero-section {
-    @apply relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-primary-950 dark:via-background-dark dark:to-accent-950;
+    @apply relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-primary-900 dark:via-background-dark dark:to-accent-900;
   }
   
   .hero-section::before {
@@ -177,7 +177,7 @@
   }
   
   .feature-card {
-    @apply bg-surface dark:bg-surface-dark rounded-2xl p-8 shadow-card hover:shadow-xl transition-all duration-300 border border-neutral-100 dark:border-neutral-800 group;
+    @apply bg-surface dark:bg-surface-dark rounded-2xl p-8 shadow-card hover:shadow-xl transition-all duration-300 border border-neutral-100 dark:border-neutral-800;
   }
   
   .feature-card:hover {

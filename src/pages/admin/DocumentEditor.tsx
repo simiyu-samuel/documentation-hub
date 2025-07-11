@@ -16,7 +16,7 @@ export const DocumentEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const isEditing = id !== 'new';
+  const isEditing = !!id && id !== 'new';
 
   const [document, setDocument] = useState<Partial<Document>>({
     title: '',
@@ -92,19 +92,34 @@ export const DocumentEditor: React.FC = () => {
   const handleSave = async (status: 'draft' | 'published' = 'draft') => {
     if (!user) return;
 
+    // Validation for required fields
+    if (!document.title || !document.slug || !document.content) {
+      setError('Title, slug, and content are required.');
+      return;
+    }
+
     try {
       setSaving(true);
       setError(null);
 
-      const docData = {
+      let docData = {
         ...document,
         status,
         author_id: user.id,
         slug: document.slug || slugify(document.title || ''),
       };
 
+      // Remove empty string values for optional fields
+      if (docData.description === '') delete docData.description;
+      if (docData.category_id === '') delete docData.category_id;
+      if (docData.meta_title === '') delete docData.meta_title;
+      if (docData.meta_description === '') delete docData.meta_description;
+
+      // Debug: log the data being sent
+      console.log('Saving document with data:', docData);
+
       let result;
-      if (isEditing) {
+      if (isEditing && id) {
         result = await supabase
           .from('documents')
           .update(docData)
@@ -118,6 +133,9 @@ export const DocumentEditor: React.FC = () => {
           .select()
           .single();
       }
+
+      // Debug: log the result
+      console.log('Supabase result:', result);
 
       if (result.error) throw result.error;
 
