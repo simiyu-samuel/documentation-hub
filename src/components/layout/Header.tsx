@@ -7,7 +7,11 @@ import { useAppSettings } from '../../hooks/useAppSettings';
 import { Button } from '../ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  onSidebarToggle?: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onSidebarToggle }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -50,6 +54,16 @@ export const Header: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          {/* Sidebar toggle for mobile */}
+          {onSidebarToggle && (
+            <button
+              className="lg:hidden mr-2 p-2 rounded-lg text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-950/30 transition-all duration-200"
+              onClick={onSidebarToggle}
+              aria-label="Open sidebar"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+          )}
           {/* Logo */}
           <motion.div 
             className="flex items-center"
